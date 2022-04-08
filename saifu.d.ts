@@ -21,6 +21,7 @@ export declare const useTokenInfos: () => TokenInfo[];
 export declare const usePrice: (
   tokenInfo?: TokenInfo | undefined
 ) => UseQueryResult<number | undefined, unknown>;
+export declare const useSignAllTransactions: () => (txs: Transaction[]) => void;
 
 /**
  * Fetches the given image by url from cache, or retrieves it
