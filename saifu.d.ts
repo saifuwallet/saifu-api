@@ -3,6 +3,8 @@ import { Connection, PublicKey } from "@solana/web3.js";
 import { FunctionComponent } from "react";
 import { UseQueryResult } from "react-query";
 
+export { useQuery, useMutation } from "react-query";
+
 // Hooks
 export declare const useTokenAccounts: () => UseQueryResult<
   Map<string, TokenAccount>,
