@@ -7,7 +7,7 @@ export { useQuery, useMutation } from "react-query";
 
 // Hooks
 export declare const useTokenAccounts: () => UseQueryResult<
-  Map<string, TokenAccount>,
+  TokenAccount[],
   unknown
 >;
 export declare const useNFTAccounts: () => UseQueryResult<
