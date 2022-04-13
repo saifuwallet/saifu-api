@@ -1,8 +1,9 @@
 import { TokenInfo } from "@solana/spl-token-registry";
-import { Connection, PublicKey } from "@solana/web3.js";
+import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { FunctionComponent } from "react";
 import { UseQueryResult } from "react-query";
 
+// Re-export react-query
 export { useQuery, useMutation } from "react-query";
 
 // Hooks
