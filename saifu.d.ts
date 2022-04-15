@@ -120,13 +120,16 @@ export interface AppContext {
   };
 }
 
+/**
+ * @deprecated Pass app context from Plugin
+ */
 export interface ViewProps {
   app: AppContext;
 }
 export interface View {
   title: string;
   id: string;
-  component: FunctionComponent<ViewProps>;
+  component: FunctionComponent | React.ReactElement;
   icon?: React.ReactElement;
 }
 
