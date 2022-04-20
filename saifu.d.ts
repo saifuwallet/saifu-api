@@ -133,6 +133,28 @@ export interface View {
   icon?: React.ReactElement;
 }
 
+/**
+ * A hook that will be called on dashboard load.
+ * Each plugin balance summary will be displayed individually
+ */
+export interface BalanceSummaryHook { 
+  (): { isLoading: boolean; data?: PluginBalanceSummary[] };
+}
+
+/**
+ * A balance summary object that will be used to render a card on the wallet.
+ * title, subtitle should ideally describe the balance. E.g Solend Deposits, Lido balance
+ * value1, value2 can be arbitrary values 
+ * but ideally should be amount, quantity, or currency value of the balance.
+ */
+export interface PluginBalanceSummary {
+  title: string;
+  subtitle?: string;
+  value1: string;
+  value2: string;
+  iconUrl?: string;
+}
+
 export declare abstract class PluginSettings {
   abstract plugin: Plugin;
   constructor(plugin: Plugin);
@@ -183,6 +205,12 @@ export declare abstract class Plugin {
    */
   addView(view: View): void;
 
+  /**
+   * Adds a balance summary hook to the wallet.
+   * This allows plugins to display balance summaries 
+   * in the dashboard if needed.
+   */
+  addHook(fn: BalanceSummaryHook): void
   /**
    * Register PluginSettings to be associated with this plugin
    * Setting a PluginSettings object will enable the settings
