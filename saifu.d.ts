@@ -25,6 +25,7 @@ export declare const usePrice: (
   tokenInfo?: TokenInfo | undefined
 ) => UseQueryResult<number | undefined, unknown>;
 export declare const useSignAllTransactions: () => (txs: Transaction[]) => void;
+export declare const useParams: () => URLSearchParams;
 
 /**
  * Fetches the given image by url from cache, or retrieves it
@@ -137,7 +138,7 @@ export interface View {
  * A hook that will be called on dashboard load.
  * Each plugin balance summary will be displayed individually
  */
-export interface BalanceSummaryHook { 
+export interface BalanceSummaryHook {
   (): { isLoading: boolean; data?: PluginBalanceSummary[] };
 }
 
@@ -184,6 +185,13 @@ export declare class Setting {
   addText(func: (setting: TextSetting) => TextSetting): this;
 }
 
+export interface TokenActionCallbackArgs {
+  navigate: (path: string) => void;
+  pluginNavigate: (viewId: string, params?: URLSearchParams) => void;
+}
+
+export type TokenActionCallbackFunc = (args: TokenActionCallbackArgs) => void;
+
 export declare abstract class Plugin {
   /**
    * AppContext holds meta information about the wallet
@@ -211,12 +219,24 @@ export declare abstract class Plugin {
    * in the dashboard if needed.
    */
   setSummaryHook(fn: BalanceSummaryHook): void
+
   /**
    * Register PluginSettings to be associated with this plugin
    * Setting a PluginSettings object will enable the settings
    * menu to appear for your Plugin
    */
   setSettings(settings: PluginSettings): void;
+
+  /**
+   * Registers a action to be shown when interacting with a specific token.
+   * onClick is a callback that retrieves { navigate, pluginNavigate } for navigating to different parts of the wallet
+   * pluginNavigate is scoped to the current plugin and allows easy routing to plugin views
+   *
+   * @param      {string}   mint    The mint
+   * @param      {string}   title   Title to display
+   * @param      {onClick}  func    callback to run on click
+   */
+  addTokenAction(mint: string, title: string, onClick: TokenActionCallbackFunc): void;
 
   /**
    * Load data from the plugin storage
