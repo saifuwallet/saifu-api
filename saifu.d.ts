@@ -210,7 +210,7 @@ export declare abstract class Plugin {
    * This allows plugins to display balance summaries 
    * in the dashboard if needed.
    */
-  addHook(fn: BalanceSummaryHook): void
+  setSummaryHook(fn: BalanceSummaryHook): void
   /**
    * Register PluginSettings to be associated with this plugin
    * Setting a PluginSettings object will enable the settings
