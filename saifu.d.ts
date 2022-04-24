@@ -6,6 +6,9 @@ import { UseQueryResult } from "react-query";
 // Re-export react-query
 export { useQuery, useMutation } from "react-query";
 
+// Re-export React Router Link
+export { Link } from 'react-router-dom';
+
 // Hooks
 export declare const useTokenAccounts: () => UseQueryResult<
   TokenAccount[],
