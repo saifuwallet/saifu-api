@@ -188,10 +188,19 @@ export declare class Setting {
   addText(func: (setting: TextSetting) => TextSetting): this;
 }
 
+export interface TokenAccountInfo {
+  decimals: number;
+  freezeAuthority: string;
+  isInitialized: boolean;
+  mintAuthority: string;
+  supply: string;
+}
+
 export interface TokenActionCallbackArgs {
   navigate: (path: string) => void;
   pluginNavigate: (viewId: string, params?: URLSearchParams) => void;
   tokenInfo: TokenInfo;
+  tokenAccountInfo: TokenAccountInfo;
 }
 
 export type TokenActionCallbackFunc = (args: TokenActionCallbackArgs) => void;
