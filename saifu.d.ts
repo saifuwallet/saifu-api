@@ -199,15 +199,17 @@ export interface TokenAccountInfo {
 export interface TokenActionCallbackArgs {
   navigate: (path: string) => void;
   pluginNavigate: (viewId: string, params?: URLSearchParams) => void;
-  tokenInfo: TokenInfo;
-  tokenAccountInfo: TokenAccountInfo;
+  mint: string;
+  tokenInfo?: TokenInfo;
+  tokenAccountInfo?: TokenAccountInfo;
 }
 
 export type TokenActionCallbackFunc = (args: TokenActionCallbackArgs) => void;
 
 export interface TokenActionFilterArgs {
-  tokenInfo: TokenInfo;
-  tokenAccountInfo: TokenAccountInfo;
+  tokenInfo?: TokenInfo;
+  tokenAccountInfo?: TokenAccountInfo;
+  mint: string;
 }
 export type TokenActionFilterFunc = (args: TokenActionFilterArgs) => boolean;
 
