@@ -188,9 +188,15 @@ export declare class Setting {
 export interface TokenActionCallbackArgs {
   navigate: (path: string) => void;
   pluginNavigate: (viewId: string, params?: URLSearchParams) => void;
+  tokenInfo: TokenInfo;
 }
 
 export type TokenActionCallbackFunc = (args: TokenActionCallbackArgs) => void;
+
+export interface TokenActionFilterArgs {
+  tokenInfo: TokenInfo;
+}
+export type TokenActionFilterFunc = (args: TokenActionFilterArgs) => boolean;
 
 export declare abstract class Plugin {
   /**
@@ -236,7 +242,7 @@ export declare abstract class Plugin {
    * @param      {string}   title   Title to display
    * @param      {onClick}  func    callback to run on click
    */
-  addTokenAction(mint: string, title: string, onClick: TokenActionCallbackFunc): void;
+  addTokenAction(mint: string | TokenActionFilterFunc, title: string, onClick: TokenActionCallbackFunc): void;
 
   /**
    * Load data from the plugin storage
