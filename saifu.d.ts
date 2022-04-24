@@ -207,6 +207,7 @@ export type TokenActionCallbackFunc = (args: TokenActionCallbackArgs) => void;
 
 export interface TokenActionFilterArgs {
   tokenInfo: TokenInfo;
+  tokenAccountInfo: TokenAccountInfo;
 }
 export type TokenActionFilterFunc = (args: TokenActionFilterArgs) => boolean;
 
