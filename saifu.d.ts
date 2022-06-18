@@ -87,6 +87,8 @@ interface TokenMetadata {
  * to plugins
  */
 export interface AppContext {
+  connection: Connection;
+
   /**
    * @deprecated Import hooks directly from package
    */
@@ -213,14 +215,21 @@ export interface TokenActionFilterArgs {
 }
 export type TokenActionFilterFunc = (args: TokenActionFilterArgs) => boolean;
 
+export interface Opportunity {
+  title: string;
+  mint: string;
+  rate: number;
+  getDepositTransaction?: () => void;
+  getWithdrawTransaction?: () => void;
+  getBalance?: () => void;
+}
+
+export interface EarnProvider {
+  getOpportunities: (appContext: AppContext) => Promise<Opportunity[]>;
+  getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
+}
+
 export declare abstract class Plugin {
-  /**
-   * AppContext holds meta information about the wallet
-   */
-  app: AppContext;
-
-  constructor(app: AppContext);
-
   /**
    * Called when the plugin is getting loaded by the wallet
    * Use this to initialize your plugin, register views, etc.
