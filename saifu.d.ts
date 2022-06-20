@@ -88,42 +88,8 @@ interface TokenMetadata {
  */
 export interface AppContext {
   connection: Connection;
-
-  /**
-   * @deprecated Import hooks directly from package
-   */
-  hooks: {
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    useTokenAccounts: () => UseQueryResult<Map<string, TokenAccount>, unknown>;
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    useNFTAccounts: () => UseQueryResult<TokenAccount[], unknown>;
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    useTokenMetadata: (addr: string) => UseQueryResult<TokenMetadata, unknown>;
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    useConnection: () => Connection;
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    usePublicKey: () => PublicKey | undefined;
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    useTokenInfos: () => TokenInfo[];
-    /**
-     * @deprecated Import hooks directly from package
-     */
-    usePrice: (
-      tokenInfo?: TokenInfo | undefined
-    ) => UseQueryResult<number | undefined, unknown>;
-  };
+  tokenAccounts: TokenAccount[];
+  publicKey?: PublicKey;
 }
 
 /**
@@ -216,17 +182,29 @@ export interface TokenActionFilterArgs {
 export type TokenActionFilterFunc = (args: TokenActionFilterArgs) => boolean;
 
 export interface Opportunity {
+  id: string;
   title: string;
   mint: string;
   rate: number;
-  getDepositTransaction?: () => void;
-  getWithdrawTransaction?: () => void;
-  getBalance?: () => void;
 }
 
 export interface EarnProvider {
   getOpportunities: (appContext: AppContext) => Promise<Opportunity[]>;
   getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
+
+  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<number>;
+  getOpportunityDepositTransaction?: (amount: number) => Promise<Transaction>;
+  getOpportunityWithdrawTransaction?: (amount: number) => Promise<Transaction>;
+}
+
+export interface AssetBalance {
+  mint: string;
+  balance: number;
+}
+
+export interface BalanceProvider {
+  getBalances: (appContext: AppContext) => Promise<AssetBalance[]>;
+  getBalanceForMint: (appContext: AppContext, mint: string) => Promise<AssetBalance | null>;
 }
 
 export declare abstract class Plugin {
