@@ -193,8 +193,8 @@ export interface EarnProvider {
   getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
 
   getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<number>;
-  getOpportunityDepositTransaction?: (amount: number) => Promise<Transaction>;
-  getOpportunityWithdrawTransaction?: (amount: number) => Promise<Transaction>;
+  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: number) => Promise<Transaction[]>;
+  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: number) => Promise<Transaction[]>;
 }
 
 export interface AssetBalance {
