@@ -2,13 +2,13 @@ import { TokenInfo } from "@solana/spl-token-registry";
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { FunctionComponent } from "react";
 import { UseQueryResult } from "react-query";
-import BN from 'bn.js';
+import BN from "bn.js";
 
 // Re-export react-query
 export { useQuery, useMutation } from "react-query";
 
 // Re-export React Router Link
-export { Link } from 'react-router-dom';
+export { Link } from "react-router-dom";
 
 // Hooks
 export declare const useTokenAccounts: () => UseQueryResult<
@@ -16,7 +16,7 @@ export declare const useTokenAccounts: () => UseQueryResult<
   unknown
 >;
 export declare const useNFTAccounts: () => UseQueryResult<
-  TokenAccount[],
+  NFTAccount[],
   unknown
 >;
 export declare const useTokenMetadata: (
@@ -61,6 +61,21 @@ export interface TokenAccount {
   mint: string;
   amount: string;
   decimals: number;
+}
+
+export interface NFTAccount {
+  mint: string;
+  name: string;
+  symbol: string;
+  uri: string;
+  sellerFeeBasisPoints: number;
+  collection: {
+    verified: boolean;
+    key: string;
+  } | null;
+  isMutable: boolean;
+  primarySaleHappened: boolean;
+  editionNonce: number | null;
 }
 
 interface TokenMetadata {
@@ -117,7 +132,7 @@ export interface BalanceSummaryHook {
 /**
  * A balance summary object that will be used to render a card on the wallet.
  * title, subtitle should ideally describe the balance. E.g Solend Deposits, Lido balance
- * value1, value2 can be arbitrary values 
+ * value1, value2 can be arbitrary values
  * but ideally should be amount, quantity, or currency value of the balance.
  */
 export interface PluginBalanceSummary {
@@ -191,15 +206,29 @@ export interface Opportunity {
 
 export interface EarnProvider {
   getOpportunities: (appContext: AppContext) => Promise<Opportunity[]>;
-  getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
+  getOpportunitiesForMint: (
+    appContext: AppContext,
+    mint: string
+  ) => Promise<Opportunity[]>;
 
-  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<string>;
-  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: string) => Promise<Transaction[]>;
-  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: string) => Promise<Transaction[]>;
+  getOpportunityBalance: (
+    appContext: AppContext,
+    opportunity: Opportunity
+  ) => Promise<string>;
+  getOpportunityDepositTransactions?: (
+    appContext: AppContext,
+    opportunity: Opportunity,
+    amount: string
+  ) => Promise<Transaction[]>;
+  getOpportunityWithdrawTransactions?: (
+    appContext: AppContext,
+    opportunity: Opportunity,
+    amount: string
+  ) => Promise<Transaction[]>;
 }
 
 declare enum BalanceType {
-  Earn = 'earn',
+  Earn = "earn",
 }
 
 export interface AssetBalance {
@@ -210,7 +239,10 @@ export interface AssetBalance {
 
 export interface BalanceProvider {
   getBalances: (appContext: AppContext) => Promise<AssetBalance[]>;
-  getBalanceForMint: (appContext: AppContext, mint: string) => Promise<AssetBalance | null>;
+  getBalanceForMint: (
+    appContext: AppContext,
+    mint: string
+  ) => Promise<AssetBalance | null>;
 }
 
 export declare abstract class Plugin {
@@ -229,10 +261,10 @@ export declare abstract class Plugin {
 
   /**
    * Adds a balance summary hook to the wallet.
-   * This allows plugins to display balance summaries 
+   * This allows plugins to display balance summaries
    * in the dashboard if needed.
    */
-  setSummaryHook(fn: BalanceSummaryHook): void
+  setSummaryHook(fn: BalanceSummaryHook): void;
 
   /**
    * Register PluginSettings to be associated with this plugin
@@ -250,7 +282,11 @@ export declare abstract class Plugin {
    * @param      {string}   title   Title to display
    * @param      {onClick}  func    callback to run on click
    */
-  addTokenAction(mint: string | TokenActionFilterFunc, title: string, onClick: TokenActionCallbackFunc): void;
+  addTokenAction(
+    mint: string | TokenActionFilterFunc,
+    title: string,
+    onClick: TokenActionCallbackFunc
+  ): void;
 
   /**
    * Load data from the plugin storage
