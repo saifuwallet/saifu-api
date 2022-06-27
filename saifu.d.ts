@@ -193,9 +193,9 @@ export interface EarnProvider {
   getOpportunities: (appContext: AppContext) => Promise<Opportunity[]>;
   getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
 
-  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<BN>;
-  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: BN) => Promise<Transaction[]>;
-  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: BN) => Promise<Transaction[]>;
+  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<string>;
+  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: string) => Promise<Transaction[]>;
+  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: string) => Promise<Transaction[]>;
 }
 
 declare enum BalanceType {
@@ -204,7 +204,7 @@ declare enum BalanceType {
 
 export interface AssetBalance {
   mint: string;
-  balance: BN;
+  balance: string;
   type: BalanceType;
 }
 
