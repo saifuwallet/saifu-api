@@ -2,6 +2,7 @@ import { TokenInfo } from "@solana/spl-token-registry";
 import { Connection, PublicKey, Transaction } from "@solana/web3.js";
 import { FunctionComponent } from "react";
 import { UseQueryResult } from "react-query";
+import BN from 'bn.js';
 
 // Re-export react-query
 export { useQuery, useMutation } from "react-query";
@@ -192,14 +193,19 @@ export interface EarnProvider {
   getOpportunities: (appContext: AppContext) => Promise<Opportunity[]>;
   getOpportunitiesForMint: (appContext: AppContext, mint: string) => Promise<Opportunity[]>;
 
-  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<number>;
-  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: number) => Promise<Transaction[]>;
-  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: number) => Promise<Transaction[]>;
+  getOpportunityBalance: (appContext: AppContext, opportunity: Opportunity) => Promise<BN>;
+  getOpportunityDepositTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: BN) => Promise<Transaction[]>;
+  getOpportunityWithdrawTransactions?: (appContext: AppContext, opportunity: Opportunity, amount: BN) => Promise<Transaction[]>;
+}
+
+declare enum BalanceType {
+  Earn = 'earn',
 }
 
 export interface AssetBalance {
   mint: string;
-  balance: number;
+  balance: BN;
+  type: BalanceType;
 }
 
 export interface BalanceProvider {
