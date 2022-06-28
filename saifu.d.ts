@@ -227,8 +227,8 @@ export interface EarnProvider {
   ) => Promise<Transaction[]>;
 }
 
-declare enum BalanceType {
-  Earn = "earn",
+export declare enum BalanceType {
+  Earn = 'earn',
 }
 
 export interface AssetBalance {
