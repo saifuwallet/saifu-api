@@ -202,6 +202,7 @@ export interface Opportunity {
   title: string;
   mint: string;
   rate: number;
+  detailUrl?: string;
 }
 
 export interface EarnProvider {
